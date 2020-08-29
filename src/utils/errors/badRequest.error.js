@@ -1,11 +1,9 @@
 import { BAD_REQUEST } from 'http-status';
 import { HttpError } from './http.error';
+import { errorMessage } from '../../common/constants/messages';
 
-// eslint-disable-next-line import/prefer-default-export
 export class BadRequest extends HttpError {
-  constructor(message) {
-    super();
-    this.message = message;
-    this.code = BAD_REQUEST;
+  constructor(message = errorMessage.BAD_REQUEST) {
+    super(message, BAD_REQUEST);
   }
 }

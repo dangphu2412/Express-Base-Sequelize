@@ -1,11 +1,9 @@
 import { NOT_FOUND } from 'http-status';
 import { HttpError } from './http.error';
+import { errorMessage } from '../../common/constants/messages';
 
-// eslint-disable-next-line import/prefer-default-export
 export class NotFound extends HttpError {
-  constructor(message) {
-    super();
-    this.message = message;
-    this.code = NOT_FOUND;
+  constructor(message = errorMessage.NOT_FOUND) {
+    super(message, NOT_FOUND);
   }
 }

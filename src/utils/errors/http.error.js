@@ -1,7 +1,12 @@
-// eslint-disable-next-line import/prefer-default-export
+// @ts-check
 export class HttpError extends Error {
-  constructor(message) {
+  /**
+   * @param {string} message
+   * @param {number} code
+   */
+  constructor(message, code) {
     super();
     this.message = message;
+    this.code = code;
   }
 }

@@ -1,3 +1,4 @@
+// @ts-check
 import { INTERNAL_SERVER_ERROR } from 'http-status';
 import { HttpError } from './http.error';
 
@@ -19,3 +20,7 @@ export const errorHandler = (err, req, res, next) => {
 export * from './badRequest.error';
 
 export * from './notFound.error';
+
+export * from './unAuthorize.error';
+
+export * from './forbidden.error';
