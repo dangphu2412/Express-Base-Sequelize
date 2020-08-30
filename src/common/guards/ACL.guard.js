@@ -3,10 +3,6 @@ import { isUndefined, find } from 'lodash';
 import { Forbidden } from '../../utils/errors';
 
 export class GuardAccess {
-  constructor(jwtStrategy) {
-    this.strategy = jwtStrategy;
-  }
-
   guardCheck(...scopes) {
     return (req, res, next) => {
       const { user } = req;

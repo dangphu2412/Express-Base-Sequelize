@@ -18,8 +18,8 @@ export const SALT_ROUNDS = parseInt(process.env.SALT_ROUNDS, 10);
 
 if (
   isEmpty(SERVER)
-  || isEmpty(JWT_CONFIG)
-  || isEmpty(SALT_ROUNDS)
+  && isEmpty(JWT_CONFIG)
+  && isEmpty(SALT_ROUNDS)
 ) {
   logger.info('Missing secrets in .env ! Please check in \'src/common/constants/secrets \'');
   process.exit(1);

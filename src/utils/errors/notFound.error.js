@@ -1,6 +1,6 @@
 import { NOT_FOUND } from 'http-status';
 import { HttpError } from './http.error';
-import { errorMessage } from '../../common/constants/messages';
+import { errorMessage } from '../../common/constants';
 
 export class NotFound extends HttpError {
   constructor(message = errorMessage.NOT_FOUND) {

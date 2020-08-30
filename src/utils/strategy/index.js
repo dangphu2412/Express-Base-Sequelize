@@ -1,6 +1,6 @@
 // @ts-check
 import jwt from 'jsonwebtoken';
-import { JWT_CONFIG } from '../../common/constants/secrets';
+import { JWT_CONFIG } from '../../common/constants';
 
 export class JwtStrategy {
   constructor() {

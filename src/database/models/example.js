@@ -11,5 +11,4 @@ export default (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Example',
   });
-  return Example;
 };

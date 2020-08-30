@@ -1,14 +1,8 @@
 import express from 'express';
-import { BadRequest } from '../../utils/errors';
+import { ExampleHandler } from '../core/Example/handler';
 
 const router = express.Router();
 
-router.get('/hello', (req, res, next) => {
-  try {
-    throw new BadRequest('Bad suck');
-  } catch (error) {
-    return next(error);
-  }
-});
+ExampleHandler.register(router);
 
 export default router;

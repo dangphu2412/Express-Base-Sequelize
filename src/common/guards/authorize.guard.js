@@ -4,11 +4,8 @@ import { UnAuthorized } from '../../utils/errors';
 import { JwtStrategy } from '../../utils/strategy';
 
 export class Authorization {
-  /**
-   * @param {JwtStrategy} jwtStrategy
-   */
-  constructor(jwtStrategy) {
-    this.strategy = jwtStrategy;
+  constructor() {
+    this.strategy = new JwtStrategy();
   }
 
   auth(req, res, next) {
