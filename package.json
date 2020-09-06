@@ -12,7 +12,7 @@
     "seed": "sequelize-cli seed:generate --name",
     "migrate:latest": "sequelize-cli db:migrate",
     "migrate:rollback": "sequelize-cli db:migrate:undo:all",
-    "migrate:reset": "yarn migrate:rollback && yarn migrate:latest",
+    "migrate:reset": "yarn migrate:rollback && yarn migrate:latest && yarn seed:run",
     "seed:run": "sequelize db:seed:all",
     "seed:down": "sequelize db:seed:undo"
   },
@@ -39,6 +39,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.6.0",
+    "faker": "^5.1.0",
     "fs": "^0.0.1-security",
     "http-status": "^1.4.2",
     "jsonwebtoken": "^8.5.1",

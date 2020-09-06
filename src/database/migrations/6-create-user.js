@@ -1,3 +1,5 @@
+const { UserStatus } = require('../../common/constants');
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('users', {
@@ -13,6 +15,19 @@ module.exports = {
       password: {
         type: Sequelize.STRING,
       },
+      status: {
+        type: Sequelize.STRING(10),
+        defaultValue: UserStatus.ACTIVATED,
+      },
+      roleId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'roles',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+      },
+      // ...
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

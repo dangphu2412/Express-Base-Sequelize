@@ -9,8 +9,8 @@ export class GuardAccess {
 
       const { permissions } = user.roles;
 
-      const validAccess = find(permissions, (permission) => find(
-        scopes, (scope) => {
+      const validAccess = find(permissions, permission => find(
+        scopes, scope => {
           const { method, module } = scope;
 
           if (permission.method === method

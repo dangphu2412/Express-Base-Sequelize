@@ -1,11 +1,11 @@
-export class ExampleService {
-  constructor() {
-    
-  }
+// import { BaseService } from '../../concept/service';
+// import { ExampleRepository } from './repository';
 
-  getMany() {
-    return {
-      msg: 'Hello'
-    }
-  }
-}
+// class Service extends BaseService {
+//   constructor() {
+//     super();
+//     this.repository = ExampleRepository;
+//   }
+// }
+
+// export const ExampleService = new Service();

@@ -1,5 +1,7 @@
 // @ts-check
-import { SequelizeFilter, addMany } from '../../utils/dbHelper';
+import {
+  SequelizeFilter, addMany, setMany, mapKeyUpdate,
+} from '../../utils';
 import { sequelize } from '../../database/models';
 
 export class BaseService {
@@ -7,12 +9,12 @@ export class BaseService {
 
   findAndCountAll(query, scopes) {
     const builderFilter = new SequelizeFilter(query);
-    return this.repository.findAndCountAll(scopes, builderFilter);
+    return this.repository.findAndCountAll(scopes, builderFilter.getFilter());
   }
 
-  findAll(query, scopes) {
+  findAll(query, scopes = 'defaultScope') {
     const builderFilter = new SequelizeFilter(query);
-    return this.repository.findAll(scopes, builderFilter);
+    return this.repository.findAll(scopes, builderFilter.getFilter());
   }
 
   async createOne(dto, relations) {
@@ -29,4 +31,24 @@ export class BaseService {
       throw err;
     }
   }
+
+  async updateOne(dto, relations) {
+    const transaction = await sequelize.transaction({ autocommit: true });
+    try {
+      const fields = mapKeyUpdate(dto);
+      const srcDto = await this.repository.updateOne(dto, {
+        transaction,
+        fields,
+      });
+
+      await setMany(srcDto, relations.manyToMany);
+    } catch (err) {
+      await transaction.rollback();
+      throw err;
+    }
+  }
+
+  softDelete(id) {
+    return this.repository.softDelete(id);
+}
 }

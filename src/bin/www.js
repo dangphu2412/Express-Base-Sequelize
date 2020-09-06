@@ -8,7 +8,7 @@
 import debugLib from 'debug';
 import http from 'http';
 import app from '../main';
-import logger from '../utils/logger';
+import { logger } from '../utils';
 
 const debug = debugLib('messenger:server');
 /**

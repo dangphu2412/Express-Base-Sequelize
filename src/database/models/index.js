@@ -1,7 +1,11 @@
 import { Sequelize as DatabaseInstance, DataTypes } from 'sequelize';
 import loadingConfig from '../../config/database';
 
-import ExampleModel from './example';
+import Method from './method';
+import Module from './module';
+import Permission from './permission';
+import Role from './role';
+import User from './user';
 
 const _env = process.env.NODE_ENV || 'development';
 const config = loadingConfig[_env];
@@ -14,9 +18,13 @@ export const sequelize = new DatabaseInstance(
   config,
 );
 
-models.Example = ExampleModel(sequelize, DataTypes);
+models.Method = Method(sequelize, DataTypes);
+models.Module = Module(sequelize, DataTypes);
+models.Permission = Permission(sequelize, DataTypes);
+models.Role = Role(sequelize, DataTypes);
+models.User = User(sequelize, DataTypes);
 
-Object.keys(models).forEach((modelName) => {
+Object.keys(models).forEach(modelName => {
   if (models[modelName].associate) {
     models[modelName].associate(models);
   }

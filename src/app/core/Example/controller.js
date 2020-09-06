@@ -1,8 +1,11 @@
-import { OK } from 'http-status';
-import { ExampleService } from './service';
+// import { BaseController } from '../../concept/controller';
+// import { ExampleService } from './service';
 
-export class ExampleController {
-  constructor() {
-    this.service = new ExampleService();
-  }
-}
+// class Controller extends BaseController {
+//   constructor() {
+//     super();
+//     this.service = ExampleService;
+//   }
+// }
+
+// export const ExampleController = new Controller();

@@ -1,6 +1,5 @@
 import env from 'dotenv';
 import { isEmpty } from 'lodash';
-import logger from '../../../utils/logger';
 
 env.config();
 
@@ -21,6 +20,6 @@ if (
   && isEmpty(JWT_CONFIG)
   && isEmpty(SALT_ROUNDS)
 ) {
-  logger.info('Missing secrets in .env ! Please check in \'src/common/constants/secrets \'');
+  console.log('Missing secrets in .env ! Please check in \'src/common/constants/secrets \'');
   process.exit(1);
 }

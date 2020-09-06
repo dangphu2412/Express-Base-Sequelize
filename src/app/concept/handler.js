@@ -4,7 +4,7 @@ import express from 'express';
 import { each, toLower, isUndefined } from 'lodash';
 import { Authorization } from '../../common/guards/authorize.guard';
 import { GuardAccess } from '../../common/guards/ACL.guard';
-import logger from '../../utils/logger';
+import { logger } from '../../utils';
 
 export class Handler {
   static jwt = new Authorization();
@@ -13,14 +13,14 @@ export class Handler {
 
   /**
    * @param {{router: any, prefixPath: any}} router
-   * @param {[{route: string, method: string, controller: any, validate: any, jwt: boolean, access: Array}]} register
+   * @param {[{route: string, method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE', controller: any, validate: any, jwt: boolean, access: Array}]} register
    */
   static registerRoutes({
     router,
     prefixPath,
   }, register) {
     const subRouter = express.Router();
-    each(register, (control) => {
+    each(register, control => {
       const handler = [];
       const {
         route,
@@ -52,7 +52,7 @@ export class Handler {
 
       subRouter[toLower(method)](route, handler);
 
-      logger.info(`Mapped ${method} -> ${route}`);
+      logger.info(`Mapped ${method} -> ${prefixPath}${route}`);
     });
 
     router.use(prefixPath, subRouter);

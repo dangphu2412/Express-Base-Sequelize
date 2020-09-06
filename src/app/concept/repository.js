@@ -1,11 +1,10 @@
+/* eslint-disable no-unused-vars */
 // @ts-check
-// eslint-disable-next-line no-unused-vars
+import { isUndefined } from 'lodash';
 import { SequelizeFilter } from '../../utils/dbHelper';
 
-export class BaseService {
-  constructor(model) {
-    this.model = model;
-  }
+export class BaseRepository {
+  model;
 
   /**
    * @param {[]} scopes
@@ -16,7 +15,7 @@ export class BaseService {
     queryFilter,
   ) {
     return this.model
-      .scopes(scopes || 'defaultScope')
+      .scope(scopes || 'defaultScope')
       .findAllAndCount(queryFilter);
   }
 
@@ -28,9 +27,29 @@ export class BaseService {
     scopes,
     queryFilter,
   ) {
+    console.log(queryFilter);
     return this.model
-      .scopes(scopes || 'defaultScope')
-      .findAll(queryFilter);
+      .scope(scopes || 'defaultScope')
+      .findAll(queryFilter || null);
+  }
+
+  findOne(scopes, queryFilter) {
+    return this.model
+      .scope(scopes || 'defaultScope')
+      .findOne(queryFilter || null);
+  }
+
+  findNotCreate(dto, {
+    transaction,
+    conditions,
+    attributes,
+  }) {
+    return this.model.findOrCreate({
+      where: conditions,
+      defaults: dto,
+      transaction,
+      attributes,
+  });
   }
 
   /**
@@ -47,16 +66,28 @@ export class BaseService {
     });
   }
 
-  findNotCreate(dto, {
-    transaction,
+  updateOne(dto, {
     conditions,
-    attributes,
+    transaction = null,
+    fields = null,
   }) {
-    return this.model.findOrCreate({
-      where: conditions,
-      defaults: dto,
+    if (isUndefined(conditions)) {
+      const { id } = dto;
+      Object.assign(conditions, id);
+    }
+    return this.model.update(dto, {
       transaction,
-      attributes,
-  });
+      where: conditions,
+      fields,
+    });
+  }
+
+  async softDelete(id) {
+    const dto = await this.findOne('defaultScope', {
+      conditions: {
+        id,
+      },
+    });
+    await dto.destroy();
   }
 }

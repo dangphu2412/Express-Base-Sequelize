@@ -3,7 +3,6 @@ import { INTERNAL_SERVER_ERROR } from 'http-status';
 import { HttpError } from './http.error';
 
 export const errorHandler = (err, req, res, next) => {
-  console.log(err);
   if (err instanceof HttpError) {
     return res.status(err.code).json({
       status: err.code,
