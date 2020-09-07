@@ -3,29 +3,28 @@ import { FILTER } from '../../common/constants';
 
 export class SequelizeFilter {
     constructor(query) {
-      const page = query.page - 1 || FILTER.PAGE;
+      const page = query.page || FILTER.PAGE;
       const amount = query.amount || FILTER.AMOUNT;
-
-      this.offset = (page - 1) * amount;
-      this.limit = amount;
-      this.order = query.order || null;
-      this.where = query.conditions || null;
-      this.tracsaction = query.transaction || null;
+      /* findOptions sequelize not receive class instance
+      *  So save as an object in this.queryBuilder
+      */
+      this.queryBuilder = {};
+      this.queryBuilder.offset = (page - 1) * amount;
+      this.queryBuilder.limit = amount;
+      this.queryBuilder.order = query.order || null;
+      this.queryBuilder.where = query.conditions || null;
+      this.queryBuilder.tracsaction = query.transaction || null;
       if (query.exlucde) {
-        this.attributes.exclude = query.exlucde;
+        this.queryBuilder.attributes.exclude = query.exlucde;
       }
       // Options
       forOwn(query, (value, key) => {
-        this[key] = value;
+        this.queryBuilder[key] = value;
       });
     }
 
     getFilter() {
-      const filter = {};
-      Object.keys(this).forEach(key => {
-        filter[key] = this[key];
-      });
-      return filter;
+      return this.queryBuilder;
     }
 }
 

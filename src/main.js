@@ -4,10 +4,11 @@ import methodOverride from 'method-override';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import env from 'dotenv';
-
 import { NOT_FOUND } from 'http-status';
-import initRoutes from './app/routes';
+
 import { errorHandler } from './utils/errors';
+import { swaggerConfig } from './config/swagger';
+import initRoutes from './app/routes';
 
 const app = express();
 
@@ -26,9 +27,9 @@ app.use(methodOverride(req => {
     }
     return undefined;
 }));
-
+console.log(swaggerConfig())
 app.use('/api/v1/', initRoutes);
-// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerConfig()));
 
 app.use(errorHandler);
 

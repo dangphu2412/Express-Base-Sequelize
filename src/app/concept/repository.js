@@ -27,7 +27,6 @@ export class BaseRepository {
     scopes,
     queryFilter,
   ) {
-    console.log(queryFilter);
     return this.model
       .scope(scopes || 'defaultScope')
       .findAll(queryFilter || null);
