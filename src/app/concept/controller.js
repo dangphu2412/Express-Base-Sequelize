@@ -1,40 +1,41 @@
 // @ts-check
-import { OK } from 'http-status';
 
 export class BaseController {
   service;
 
-  async findAndCountAll(req, res) {
-    const { query } = req;
-    const data = await this.service.findAndCountAll(query);
-    return res.status(OK).json(data);
+  getCurrentUser(req) {
+    if (!req.user) return { id: undefined };
+    const currentUser = req.user;
+    currentUser.id = parseInt(currentUser.id, 10);
+    return currentUser;
   }
 
-  async findAll(req, res) {
+  findAndCountAll(req) {
     const { query } = req;
-    const data = await this.service.findAll(query);
-    return res.status(OK).json(data);
+    return this.service.findAndCountAll(query);
+  }
+
+  findAll(req) {
+    const { query } = req;
+    return this.service.findAll(query);
   }
 
   createOne(DtoModel, relations) {
-    return async (req, res) => {
+    return req => {
       const dto = new DtoModel(req.body);
-      const data = await this.service.createOne(dto, relations);
-      return res.status(OK).json(data);
+      return this.service.createOne(dto, relations);
     };
   }
 
   updateOne(DtoModel, relations) {
-    return async (req, res) => {
+    return req => {
       const dto = new DtoModel(req.body);
-      const data = await this.service.updateOne(dto, relations);
-      return res.status(OK).json(data);
+      return this.service.updateOne(dto, relations);
     };
   }
 
-  async softDelete(req, res) {
+  async softDelete(req) {
       const { id } = req.query;
-      const data = await this.service.softDelete(id);
-      return res.status(OK).json(data);
+      return this.service.softDelete(id);
   }
 }
