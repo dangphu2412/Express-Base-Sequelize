@@ -1,3 +1,10 @@
+# Start your project
+- First you need to <code>npm install</code> or <code>yarn install</code>
+- Check .env.example then create new file .env then fill it up.
+- If connection to pg is available go to next step.
+- Run  <code>yarn migrate:latest</code> to migrate the latest files and run <code>yarn seed:run</code> if you want to have seeds to test.
+- Finally, run <code>yarn dev</code> or <code>npm run dev</code>
+- Please make sure your have the right version of nodejs and postgresql
 # Convention:
 ## Design pattern:
 ### Singleton module:
